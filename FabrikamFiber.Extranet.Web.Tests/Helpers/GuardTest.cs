@@ -4,11 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using NUnit.Framework;
     using FabrikamFiber.Extranet.Web.Helpers;
     using Xunit;
 
-    [TestFixture]
     public class GuardTest
     {
         [Xunit.Fact]
@@ -22,33 +20,41 @@
             { }
         }
 
-        [Test]
+        [Xunit.Fact]
         public void ItShouldNotThrowExceptionIfArgumentIsNotNull()
         {
             Guard.ThrowIfNull("this is not null", "value");
         }
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Xunit.Fact]
         public void ItShouldThrowExceptionIfArgumentIsNullOrEmpty()
         {
-            Guard.ThrowIfNullOrEmpty(string.Empty, "value");
+            Assert.Throws<ArgumentNullException>(
+                delegate
+                {
+                    Guard.ThrowIfNullOrEmpty(string.Empty, "value");
+                }
+            );
         }
 
-        [Test]
+        [Xunit.Fact]
         public void ItShouldNotThrowExceptionIfArgumentIsNotNullOrEmpty()
         {
             Guard.ThrowIfNullOrEmpty("not null or empty", "value");
         }
 
-        [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Xunit.Fact]
         public void ItShouldThrowExceptionIfArgumentIsNotInRange()
         {
-            Guard.ThrowIfNotInRange(1, 2, 3, "value");
+            Assert.Throws<ArgumentOutOfRangeException>(
+                delegate
+                {
+                    Guard.ThrowIfNotInRange(1, 2, 3, "value");
+                }
+            );
         }
 
-        [Test]
+        [Xunit.Fact]
         public void ItShouldNotThrowExceptionIfArgumentIsNotLesserThanTheMin()
         {
             Guard.ThrowIfNotInRange(2, 1, 3, "value");
