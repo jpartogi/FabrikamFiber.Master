@@ -1,15 +1,17 @@
-[assembly: WebActivator.PreApplicationStartMethod(typeof(FabrikamFiber.Web.App_Start.NinjectMVC3), "Start")]
-////[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(FabrikamFiber.Web.App_Start.NinjectMVC3), "Stop")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(FabrikamFiber.Web.App_Start.NinjectWebCommon), "Start")]
+[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(FabrikamFiber.Web.App_Start.NinjectWebCommon), "Stop")]
 
 namespace FabrikamFiber.Web.App_Start
 {
-    using FabrikamFiber.DAL.Data;
+    using System;
+    using System.Web;
+
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+
     using Ninject;
-    using Ninject.Web.Mvc;
     using Ninject.Web.Common;
 
-    public static class NinjectMVC3 
+    public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
@@ -19,9 +21,10 @@ namespace FabrikamFiber.Web.App_Start
         public static void Start() 
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
+            DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             bootstrapper.Initialize(CreateKernel);
         }
-
+        
         /// <summary>
         /// Stops the application.
         /// </summary>
@@ -29,7 +32,7 @@ namespace FabrikamFiber.Web.App_Start
         {
             bootstrapper.ShutDown();
         }
-
+        
         /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
@@ -37,6 +40,9 @@ namespace FabrikamFiber.Web.App_Start
         private static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
+            kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+            kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+            
             RegisterServices(kernel);
             return kernel;
         }
@@ -47,14 +53,6 @@ namespace FabrikamFiber.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<ICustomerRepository>().To<CustomerRepository>();
-            kernel.Bind<IEmployeeRepository>().To<EmployeeRepository>();
-            kernel.Bind<IServiceTicketRepository>().To<ServiceTicketRepository>();
-            kernel.Bind<IServiceLogEntryRepository>().To<ServiceLogEntryRepository>();
-
-            kernel.Bind<IAlertRepository>().To<AlertRepository>();
-            kernel.Bind<IMessageRepository>().To<MessageRepository>();
-            kernel.Bind<IScheduleItemRepository>().To<ScheduleItemRepository>();
-        }
+        }        
     }
 }
