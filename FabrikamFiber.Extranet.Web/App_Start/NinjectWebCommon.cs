@@ -1,7 +1,7 @@
-[assembly: WebActivator.PreApplicationStartMethod(typeof(FabrikamFiber.Web.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(FabrikamFiber.Web.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(FabrikamFiber.Extranet.Web.App_Start.NinjectWebCommon), "Start")]
+[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(FabrikamFiber.Extranet.Web.App_Start.NinjectWebCommon), "Stop")]
 
-namespace FabrikamFiber.Web.App_Start
+namespace FabrikamFiber.Extranet.Web.App_Start
 {
     using System;
     using System.Web;

@@ -8,6 +8,7 @@ namespace FabrikamFiber.Extranet.Web.App_Start
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Web.Mvc;
+    using Ninject.Web.Common;
 
     public class NinjectMVC3
     {
@@ -30,7 +31,7 @@ namespace FabrikamFiber.Extranet.Web.App_Start
         /// </summary>
         public static void Start()
         {
-            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestModule));
+            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             Instance.InnerStart();
         }
 
