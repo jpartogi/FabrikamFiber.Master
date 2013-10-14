@@ -12,7 +12,7 @@ namespace FabrikamFiber.Extranet.Web.App_Start
 
     public class NinjectMVC3
     {
-        private readonly IBootstrapper bootstrapper;
+        private readonly IBootstrapper bootstrapper = new Bootstrapper();
 
         private static NinjectMVC3 instance;
 
