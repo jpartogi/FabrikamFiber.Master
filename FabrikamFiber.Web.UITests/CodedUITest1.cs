@@ -15,7 +15,7 @@ namespace FabrikamFiber.Web.UITests
     /// <summary>
     /// Summary description for CodedUITest1
     /// </summary>
-    [CodedUITest]
+    //[CodedUITest]
     public class CodedUITest1
     {
         public CodedUITest1()

@@ -6,7 +6,7 @@ namespace FabrikamFiber.Web.App_Start
     using FabrikamFiber.DAL.Data;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
-    using Ninject.Web.Common;
+    using Ninject.Web.Mvc;
 
     public static class NinjectMVC3 
     {
@@ -17,7 +17,7 @@ namespace FabrikamFiber.Web.App_Start
         /// </summary>
         public static void Start() 
         {
-            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
+            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestModule));
             bootstrapper.Initialize(CreateKernel);
         }
 

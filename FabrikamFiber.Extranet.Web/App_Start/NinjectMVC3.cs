@@ -1,14 +1,14 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(FabrikamFiber.Extranet.Web.App_Start.NinjectMVC3), "Start")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(FabrikamFiber.Extranet.Web.App_Start.NinjectMVC3), "Start")]
 ////[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(FabrikamFiber.Extranet.Web.App_Start.NinjectMVC3), "Stop")]
 
 namespace FabrikamFiber.Extranet.Web.App_Start
 {
     using FabrikamFiber.DAL.Data;
-    
+
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
-    using Ninject.Web.Common;
-    using WebActivatorEx;
+    using Ninject.Web.Mvc;
+
     public class NinjectMVC3
     {
         private readonly IBootstrapper bootstrapper;
@@ -30,7 +30,7 @@ namespace FabrikamFiber.Extranet.Web.App_Start
         /// </summary>
         public static void Start()
         {
-            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
+            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestModule));
             Instance.InnerStart();
         }
 

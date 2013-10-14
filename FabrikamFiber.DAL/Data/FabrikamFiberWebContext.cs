@@ -1,8 +1,9 @@
 namespace FabrikamFiber.DAL.Data
 {
+    using FabrikamFiber.DAL.Data;
     using System.Data.Entity;
 
-    public class FabrikamFiberWebContext : DbContext
+    public class FabrikamFiberWebContext : DbContext, IFabrikamFiberWebContext
     {
         // You can add custom code to this file. Changes will not be overwritten.
         // 
@@ -22,18 +23,18 @@ namespace FabrikamFiber.DAL.Data
         {
         }
 
-        public DbSet<Models.Customer> Customers { get; set; }
+        public IDbSet<Models.Customer> Customers { get; set; }
 
-        public DbSet<Models.Employee> Employees { get; set; }
+        public IDbSet<Models.Employee> Employees { get; set; }
 
-        public DbSet<Models.ServiceTicket> ServiceTickets { get; set; }
+        public IDbSet<Models.ServiceTicket> ServiceTickets { get; set; }
 
-        public DbSet<Models.ServiceLogEntry> ServiceLogEntries { get; set; }
+        public IDbSet<Models.ServiceLogEntry> ServiceLogEntries { get; set; }
 
-        public DbSet<Models.Message> Messages { get; set; }
+        public IDbSet<Models.Message> Messages { get; set; }
 
-        public DbSet<Models.Alert> Alerts { get; set; }
+        public IDbSet<Models.Alert> Alerts { get; set; }
 
-        public DbSet<Models.ScheduleItem> ScheduleItems { get; set; }
+        public IDbSet<Models.ScheduleItem> ScheduleItems { get; set; }
     }
 }

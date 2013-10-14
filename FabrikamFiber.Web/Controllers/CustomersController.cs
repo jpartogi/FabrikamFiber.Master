@@ -32,6 +32,7 @@ namespace FabrikamFiber.Web.Controllers
         [HttpPost]
         public ActionResult Create(Customer customer)
         {
+            //check model state
             if (ModelState.IsValid)
             {
                 this.customerRepository.InsertOrUpdate(customer);
