@@ -5,7 +5,7 @@
     using System.Linq.Expressions;
     using System.Web.Mvc;
 
-    using Xunit;
+    using NUnit.Framework;
     using NSubstitute;
     using FluentAssertions;
 
@@ -14,21 +14,20 @@
     using FabrikamFiber.DAL.Services;
     using FabrikamFiber.Web.Controllers;
 
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+    [TestFixture]
     public class CustomersControllerTest
     {
         ICustomerService customerService;
         CustomersController controller;
 
-        [TestInitialize]	
+        [SetUp]	
         public void SetUp()
         {
             customerService = Substitute.For<ICustomerService>();
             controller = new CustomersController(customerService);
         }
 
-        [TestMethod]	
+        [Test]	
         public void CreateInsertsCustomerAndSaves()
         {
             Customer customer = new Customer();
@@ -38,13 +37,13 @@
             customerService.Received().Save();
         }
 
-        [TestMethod]	
+        [Test]	
         public void CreateNullCustomer()
         {
             controller.Create(null);
         }
 
-        [TestMethod]	
+        [Test]	
         public void EditUpdatesCustomerAndSaves()
         {
             Customer customer = new Customer();
@@ -54,7 +53,7 @@
             customerService.Received().Save();
         }
 
-        [TestMethod]	
+        [Test]	
         public void DeleteFindAndReturnsCustomer()
         {
             int customerId = 1;
@@ -66,7 +65,7 @@
             result.Model.Should().BeOfType<Customer>();
         }
 
-        [TestMethod]	
+        [Test]	
         public void DeleteConfirmedDeletesCustomerAndSaves()
         {
             int customerId = 1;
