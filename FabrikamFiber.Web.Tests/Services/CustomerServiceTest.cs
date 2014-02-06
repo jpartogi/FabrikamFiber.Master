@@ -1,6 +1,6 @@
 ﻿namespace FabrikamFiber.Web.Tests.Services
 {
-    using Xunit;
+    using NUnit.Framework;
     using NSubstitute;
     using FluentAssertions;
 
@@ -8,18 +8,20 @@
     using DAL.Models;
     using DAL.Services;
 
+    [TestFixture]
     public class CustomerServiceTest
     {
         ICustomerRepository customerRepository;
         ICustomerService customerService;
 
-        public CustomerServiceTest()
+        [SetUp]
+        public void SetUp()
         {
             customerRepository = Substitute.For<ICustomerRepository>();
             customerService = new CustomerService(customerRepository);
         }
 
-        [Fact]
+        [Test]
         public void ShouldFindAll()
         {
             // TODO:Arrange
@@ -27,7 +29,7 @@
             // TODO: Assert
         }
 
-        [Fact]
+        [Test]
         public void ShouldFindOne()
         {
             int customerId = 1;
