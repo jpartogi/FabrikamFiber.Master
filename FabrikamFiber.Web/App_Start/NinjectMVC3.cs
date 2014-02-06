@@ -58,6 +58,7 @@ namespace FabrikamFiber.Web.App_Start
             kernel.Bind<IScheduleItemRepository>().To<ScheduleItemRepository>();
 
             kernel.Bind<ICustomerService>().To<CustomerService>();
+            kernel.Bind<IEmployeeService>().To<EmployeeService>();
         }
     }
 }

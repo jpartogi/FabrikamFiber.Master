@@ -2,27 +2,28 @@ namespace FabrikamFiber.Web.Controllers
 {
     using System.Web.Mvc;
 
-    using FabrikamFiber.DAL.Data;
-    using FabrikamFiber.DAL.Models;
+    using DAL.Data;
+    using DAL.Models;
+    using DAL.Services;
 
     public class EmployeesController : Controller
     {
-        private readonly IEmployeeRepository employeeRepository;
+        private readonly IEmployeeService employeeService;
 
-        public EmployeesController(IEmployeeRepository employeeRepository)
+        public EmployeesController(IEmployeeService employeeService)
         {
             //comment
-            this.employeeRepository = employeeRepository;
+            this.employeeService = employeeService;
         }
 
         public ViewResult Index()
         {
-            return View(this.employeeRepository.All);
+            return View(this.employeeService.All());
         }
 
         public ViewResult Details(int id)
         {
-            return View(this.employeeRepository.Find(id));
+            return View(this.employeeService.Find(id));
         }
 
         public ActionResult Create()
@@ -35,8 +36,8 @@ namespace FabrikamFiber.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.employeeRepository.InsertOrUpdate(employee);
-                this.employeeRepository.Save();
+                this.employeeService.InsertOrUpdate(employee);
+                this.employeeService.Save();
                 return RedirectToAction("Index");
             }
             
@@ -45,7 +46,7 @@ namespace FabrikamFiber.Web.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(this.employeeRepository.Find(id));
+            return View(this.employeeService.Find(id));
         }
 
         [HttpPost]
@@ -53,8 +54,8 @@ namespace FabrikamFiber.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.employeeRepository.InsertOrUpdate(employee);
-                this.employeeRepository.Save();
+                this.employeeService.InsertOrUpdate(employee);
+                this.employeeService.Save();
                 return RedirectToAction("Index");
             }
             
@@ -63,14 +64,14 @@ namespace FabrikamFiber.Web.Controllers
 
         public ActionResult Delete(int id)
         {
-            return View(this.employeeRepository.Find(id));
+            return View(this.employeeService.Find(id));
         }
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            this.employeeRepository.Delete(id);
-            this.employeeRepository.Save();
+            this.employeeService.Delete(id);
+            this.employeeService.Save();
 
             return RedirectToAction("Index");
         }
