@@ -14,39 +14,39 @@
         [ExpectedException(typeof(ArgumentNullException))]
         public void ItShouldThrowExceptionIfArgumentIsNull()
         {
-            Guard.ThrowIfNull(null, "value");
+            ExceptionGuard.ThrowIfNull(null, "value");
         }
 
         [Test]
         public void ItShouldNotThrowExceptionIfArgumentIsNotNull()
         {
-            Guard.ThrowIfNull("this is not null", "value");
+            ExceptionGuard.ThrowIfNull("this is not null", "value");
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ItShouldThrowExceptionIfArgumentIsNullOrEmpty()
         {
-            Guard.ThrowIfNullOrEmpty(string.Empty, "value");
+            ExceptionGuard.ThrowIfNullOrEmpty(string.Empty, "value");
         }
 
         [Test]
         public void ItShouldNotThrowExceptionIfArgumentIsNotNullOrEmpty()
         {
-            Guard.ThrowIfNullOrEmpty("not null or empty", "value");
+            ExceptionGuard.ThrowIfNullOrEmpty("not null or empty", "value");
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ItShouldThrowExceptionIfArgumentIsLesserThanZero()
         {
-            Guard.ThrowIfLesserThanZero(-1, "value");
+            ExceptionGuard.ThrowIfLesserThanZero(-1, "value");
         }
 
         [Test]
         public void ItShouldNotThrowExceptionIfArgumentIsNotLesserThanZero()
         {
-            Guard.ThrowIfLesserThanZero(1, "value");
+            ExceptionGuard.ThrowIfLesserThanZero(1, "value");
         }
     }
 }

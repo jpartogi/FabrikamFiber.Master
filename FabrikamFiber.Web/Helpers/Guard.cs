@@ -2,7 +2,7 @@
 {
     using System;
 
-    public static class Guard
+    public static class ExceptionGuard
     {
         public static void ThrowIfNull(object value, string name)
         {
