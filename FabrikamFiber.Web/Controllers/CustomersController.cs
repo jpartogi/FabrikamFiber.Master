@@ -4,24 +4,25 @@ namespace FabrikamFiber.Web.Controllers
 
     using DAL.Data;
     using DAL.Models;
+    using DAL.Services;
 
     public class CustomersController : Controller
     {
-        private readonly ICustomerRepository customerRepository;
+        private readonly ICustomerService customerService;
 
-        public CustomersController(ICustomerRepository customerRepository)
+        public CustomersController(ICustomerService customerService)
         {
-            this.customerRepository = customerRepository;
+            this.customerService = customerService;
         }
 
         public ViewResult Index()
         {
-            return View(this.customerRepository.All);
+            return View(this.customerService.All());
         }
 
         public ViewResult Details(int id)
         {
-            return View(this.customerRepository.Find(id));
+            return View(this.customerService.Find(id));
         }
 
         public ActionResult Create()
@@ -35,8 +36,8 @@ namespace FabrikamFiber.Web.Controllers
             //check model state
             if (ModelState.IsValid)
             {
-                this.customerRepository.InsertOrUpdate(customer);
-                this.customerRepository.Save();
+                this.customerService.InsertOrUpdate(customer);
+                this.customerService.Save();
                 return RedirectToAction("Index");
             }
             
@@ -45,7 +46,7 @@ namespace FabrikamFiber.Web.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(this.customerRepository.Find(id));
+            return View(this.customerService.Find(id));
         }
 
         [HttpPost]
@@ -53,8 +54,8 @@ namespace FabrikamFiber.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.customerRepository.InsertOrUpdate(customer);
-                this.customerRepository.Save();
+                this.customerService.InsertOrUpdate(customer);
+                this.customerService.Save();
                 return RedirectToAction("Index");
             }
             
@@ -63,14 +64,14 @@ namespace FabrikamFiber.Web.Controllers
 
         public ActionResult Delete(int id)
         {
-            return View(this.customerRepository.Find(id));
+            return View(this.customerService.Find(id));
         }
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            this.customerRepository.Delete(id);
-            this.customerRepository.Save();
+            this.customerService.Delete(id);
+            this.customerService.Save();
 
             return RedirectToAction("Index");
         }

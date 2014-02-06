@@ -4,6 +4,7 @@
 namespace FabrikamFiber.Web.App_Start
 {
     using FabrikamFiber.DAL.Data;
+    using FabrikamFiber.DAL.Services;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Web.Mvc;
@@ -55,6 +56,8 @@ namespace FabrikamFiber.Web.App_Start
             kernel.Bind<IAlertRepository>().To<AlertRepository>();
             kernel.Bind<IMessageRepository>().To<MessageRepository>();
             kernel.Bind<IScheduleItemRepository>().To<ScheduleItemRepository>();
+
+            kernel.Bind<ICustomerService>().To<CustomerService>();
         }
     }
 }

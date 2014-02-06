@@ -1,0 +1,7 @@
+<Playlist Version="1.0">
+	<Add Test="FabrikamFiber.Web.Tests.Controllers.CustomersControllerTest.CreateInsertsCustomerAndSaves" />
+	<Add Test="FabrikamFiber.Web.Tests.Controllers.CustomersControllerTest.CreateNullCustomer" />
+	<Add Test="FabrikamFiber.Web.Tests.Controllers.CustomersControllerTest.EditUpdatesCustomerAndSaves" />
+	<Add Test="FabrikamFiber.Web.Tests.Controllers.CustomersControllerTest.DeleteFindAndReturnsCustomer" />
+	<Add Test="FabrikamFiber.Web.Tests.Controllers.CustomersControllerTest.DeleteConfirmedDeletesCustomerAndSaves" />
+</Playlist>

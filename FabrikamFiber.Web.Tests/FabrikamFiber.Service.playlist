@@ -1,0 +1,4 @@
+<Playlist Version="1.0">
+	<Add Test="FabrikamFiber.Web.Tests.Services.CustomerServiceTest.ShouldFindAll" />
+	<Add Test="FabrikamFiber.Web.Tests.Services.CustomerServiceTest.ShouldFindOne" />
+</Playlist>

@@ -1,112 +1,76 @@
-﻿namespace FabrikamFiber.Web.Tests
+﻿namespace FabrikamFiber.Web.Tests.Controllers
 {
     using System;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Web.Mvc;
+
+    using Xunit;
+    using NSubstitute;
+    using FluentAssertions;
+
     using FabrikamFiber.DAL.Data;
     using FabrikamFiber.DAL.Models;
+    using FabrikamFiber.DAL.Services;
     using FabrikamFiber.Web.Controllers;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    [TestClass()]
     public class CustomersControllerTest
     {
-        MockCustomerRepository mockCustomerRepo;
+        ICustomerService customerService;
         CustomersController controller;
 
-        [TestInitialize()]
-        public void SetupController()
+        public CustomersControllerTest()
         {
-            mockCustomerRepo = new MockCustomerRepository();
-            controller = new CustomersController(mockCustomerRepo);
+            customerService = Substitute.For<ICustomerService>();
+            controller = new CustomersController(customerService);
         }
-        
-        [TestMethod()]
+
+        [Fact]
         public void CreateInsertsCustomerAndSaves()
         {
-            controller.Create(new Customer());
+            Customer customer = new Customer();
+            controller.Create(customer);
 
-            Assert.IsTrue(mockCustomerRepo.IsInsertOrUpdateCalled);
-            Assert.IsTrue(mockCustomerRepo.IsSaveCalled);
+            customerService.Received().InsertOrUpdate(customer);
+            customerService.Received().Save();
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void CreateNullCustomer()
         {
             controller.Create(null);
         }
 
-        [TestMethod()]
+        [Fact]
         public void EditUpdatesCustomerAndSaves()
         {
-            controller.Edit(new Customer());
+            Customer customer = new Customer();
+            controller.Edit(customer);
 
-            Assert.IsTrue(mockCustomerRepo.IsInsertOrUpdateCalled);
-            Assert.IsTrue(mockCustomerRepo.IsSaveCalled);
+            customerService.Received().InsertOrUpdate(customer);
+            customerService.Received().Save();
         }
 
-        [TestMethod()]
-        public void DeleteConfirmedDeletesCustomerAndSaves()
-        {
-            controller.DeleteConfirmed(1);
-
-            Assert.IsTrue(mockCustomerRepo.IsDeleteCalled);
-            Assert.IsTrue(mockCustomerRepo.IsSaveCalled);
-        }
-
-        [TestMethod()]
+        [Fact]
         public void DeleteFindAndReturnsCustomer()
         {
-            var result = controller.Delete(1);
+            int customerId = 1;
+            customerService.Find(customerId).Returns(new Customer());
 
-            Assert.IsTrue(mockCustomerRepo.IsFindCalled);
-            Assert.IsInstanceOfType(((ViewResult)result).Model, typeof(Customer));
+            ViewResult result = controller.Delete(customerId) as ViewResult;
+
+            customerService.Received().Find(customerId);
+            result.Model.Should().BeOfType<Customer>();
         }
 
-        #region Mocks
-        class MockCustomerRepository : ICustomerRepository
+        [Fact]
+        public void DeleteConfirmedDeletesCustomerAndSaves()
         {
-            public bool IsInsertOrUpdateCalled { get; set; }
+            int customerId = 1;
+            controller.DeleteConfirmed(customerId);
 
-            public bool IsSaveCalled { get; set; }
-
-            public bool IsDeleteCalled { get; set; }
-
-            public bool IsFindCalled { get; set; }
-
-            public IQueryable<Customer> All
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            public IQueryable<Customer> AllIncluding(params Expression<Func<Customer, object>>[] includeProperties)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Customer Find(int id)
-            {
-                this.IsFindCalled = true;
-                return new Customer();
-            }
-
-            public void InsertOrUpdate(Customer customer)
-            {
-                this.IsInsertOrUpdateCalled = true;
-            }
-
-            public void Delete(int id)
-            {
-                this.IsDeleteCalled = true;
-            }
-
-            public void Save()
-            {
-                this.IsSaveCalled = true;
-            }
+            customerService.Received().Delete(customerId);
+            customerService.Received().Save();
         }
-        #endregion
-    }
+    } 
 }
