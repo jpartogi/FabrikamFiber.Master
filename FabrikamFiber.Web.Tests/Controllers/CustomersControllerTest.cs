@@ -14,18 +14,21 @@
     using FabrikamFiber.DAL.Services;
     using FabrikamFiber.Web.Controllers;
 
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     public class CustomersControllerTest
     {
         ICustomerService customerService;
         CustomersController controller;
 
-        public CustomersControllerTest()
+        [TestInitialize]	
+        public void SetUp()
         {
             customerService = Substitute.For<ICustomerService>();
             controller = new CustomersController(customerService);
         }
 
-        [Fact]
+        [TestMethod]	
         public void CreateInsertsCustomerAndSaves()
         {
             Customer customer = new Customer();
@@ -35,13 +38,13 @@
             customerService.Received().Save();
         }
 
-        [Fact]
+        [TestMethod]	
         public void CreateNullCustomer()
         {
             controller.Create(null);
         }
 
-        [Fact]
+        [TestMethod]	
         public void EditUpdatesCustomerAndSaves()
         {
             Customer customer = new Customer();
@@ -51,7 +54,7 @@
             customerService.Received().Save();
         }
 
-        [Fact]
+        [TestMethod]	
         public void DeleteFindAndReturnsCustomer()
         {
             int customerId = 1;
@@ -63,7 +66,7 @@
             result.Model.Should().BeOfType<Customer>();
         }
 
-        [Fact]
+        [TestMethod]	
         public void DeleteConfirmedDeletesCustomerAndSaves()
         {
             int customerId = 1;
