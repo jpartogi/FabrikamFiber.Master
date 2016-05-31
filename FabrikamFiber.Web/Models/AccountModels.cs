@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Web.Mvc;
-using System.Web.Security;
-
-namespace FabrikamFiber.Web.Models
+﻿namespace FabrikamFiber.Web.Models
 {
+  using System.ComponentModel.DataAnnotations;
 
   public class ChangePasswordModel
   {
